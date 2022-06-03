@@ -3,18 +3,26 @@
 {% block title %}Hello DemandeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/lo/Documents/SYMFONY/my_poo_directory/src/Controller/DemandeController.php'|file_link(0) }}">src/Controller/DemandeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/lo/Documents/SYMFONY/my_poo_directory/templates/demande/index.html.twig'|file_link(0) }}">templates/demande/index.html.twig</a></code></li>
-    </ul>
+<table class="table  table-striped  mt-5">
+    <tr class="bg-info">
+        {# <th>Nom complet</th> #}
+        <th>Motif</th>
+        {# <th>Date</th> #}
+        {# <th>Email</th>
+        <th>Adresse</th> #}
+    </tr>
+    {% for demande in demandes %}
+        <tr>
+            {# <td>{{demande.nomComplet}}</td> #}
+            <td>{{demande.motif}}</td>
+            {# <td>{{demande.date}}</td> #}
+            {# <td>{{demande.login}}</td> #}
+            {# <td>{{demande.adresse}}</td> #}
+        </tr>
+    {% endfor %}
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(demandes) }}
 </div>
 {% endblock %}

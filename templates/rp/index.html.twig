@@ -3,18 +3,22 @@
 {% block title %}Hello RPController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/lo/Documents/SYMFONY/my_poo_directory/src/Controller/RPController.php'|file_link(0) }}">src/Controller/RPController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/lo/Documents/SYMFONY/my_poo_directory/templates/rp/index.html.twig'|file_link(0) }}">templates/rp/index.html.twig</a></code></li>
-    </ul>
+<table class="table  table-striped  mt-5">
+    <tr class="bg-primary">
+        <th>Nom complet</th>
+        <th>Email</th>
+        <th>Password</th>
+    </tr>
+    {% for rp in rps %}
+        <tr>
+            <td>{{rp.nomComplet}}</td>
+            <td>{{rp.login}}</td>
+            <td>{{rp.password}}</td>
+        </tr>
+    {% endfor %}
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(rps) }}
 </div>
 {% endblock %}

@@ -1,9 +1,24 @@
-{% for etudiant in etudiants %}
-<p >
-{{etudiant.nomComplet}}
-</p>
-<p>
-{{etudiant.adresse}}
-</p>
+{% extends 'base.html.twig' %}
 
-{% endfor %}
+{% block title %}Hello EtudiantController!{% endblock %}
+
+{% block body %}
+
+<table class="table  table-striped  mt-5">
+    <tr class="bg-primary">
+        <th>Nom complet</th>
+        <th>Email</th>
+        <th>Adresse</th>
+    </tr>
+    {% for etudiant in etudiants %}
+        <tr>
+            <td>{{etudiant.nomComplet}}</td>
+            <td>{{etudiant.login}}</td>
+            <td>{{etudiant.adresse}}</td>
+        </tr>
+    {% endfor %}
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(etudiants) }}
+</div>
+{% endblock %}
