@@ -6,23 +6,24 @@
 
 <table class="table  table-striped  mt-5">
     <tr class="bg-info">
-        {# <th>Nom complet</th> #}
+        <th>#</th>
+        <th>Student's Name</th>
+        <th>RP's Name</th>
         <th>Motif</th>
-        {# <th>Date</th> #}
-        {# <th>Email</th>
-        <th>Adresse</th> #}
+        <th>Date</th>
     </tr>
+    {%set i=0 %}
     {% for demande in demandes %}
         <tr>
-            {# <td>{{demande.nomComplet}}</td> #}
+            <td>{% set i=i+1 %}{{i}}</td>
+            <td>{{demande.etudiant.nomComplet}}</td>
+            <td>{{demande.rp.nomComplet}}</td>
             <td>{{demande.motif}}</td>
-            {# <td>{{demande.date}}</td> #}
-            {# <td>{{demande.login}}</td> #}
-            {# <td>{{demande.adresse}}</td> #}
+            <td>{{demande.date|date}}</td>
         </tr>
     {% endfor %}
 </table>
-<div class="navigation">
+<div class="navigation d-flex justify-content-center">
     {{ knp_pagination_render(demandes) }}
 </div>
 {% endblock %}

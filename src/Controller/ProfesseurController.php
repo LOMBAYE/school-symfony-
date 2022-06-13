@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Professeur;
+use App\Form\ProfesseurType;
 use App\Repository\ProfesseurRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,4 +25,20 @@ class ProfesseurController extends AbstractController
         //     'controller_name' => 'ProfesseurController',
         // ]);
     }
+    // #[Route('/add/professeur', name: 'add_professeur')]
+    // public function add( Request $request,ProfesseurRepository $repo): Response
+    // {
+    //    $prof=new Professeur();
+    //    $form=$this->createForm(ProfesseurType::class,$prof);
+    //    $form->handleRequest($request);
+    //    if ($form->isSubmitted() && $form->isValid()){
+    //        $repo->add($prof,true);
+    //        return $this->redirectToRoute('add_professeur');
+    //    }
+    //        return $this->renderForm('professeur/prof.html.twig',[
+    //            'forms'=>$form,
+    //            'professeur'=>$prof
+    //        ]);
+    // }
+    
 }
