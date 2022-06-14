@@ -8,7 +8,7 @@ security:
         # users_in_memory: { memory: null }
         app_user_provider:
             entity:
-                class: App/Entity/User
+                class: App\Entity\User
                 property: login
     firewalls:
         dev:
@@ -17,7 +17,8 @@ security:
         main:
             lazy: true
             provider:  app_user_provider
-            custom_authenticator: App\Security\LoginAuthenticator
+            custom_authenticator:
+                - App\Security\LoginAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout

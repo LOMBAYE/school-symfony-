@@ -28,7 +28,7 @@ class ClasseFixtures extends Fixture
         // $classe = new Classe();
     
         // $classe->setNiveau($niveaux[$pos]);
-        // $classe->setFiliere($niveaux[$pos]);
+        // $classe->setFiliere($filieres[$pos]);
         // $classe->setLibelle($niveaux[$pos]."".$filieres[$pos]);
         // $manager->persist($classe);
         // $classe->setRP($user);

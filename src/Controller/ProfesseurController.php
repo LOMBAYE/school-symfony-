@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Professeur;
+use App\Form\ProfFormType;
 use App\Form\ProfesseurType;
+use App\Repository\ClasseRepository;
 use App\Repository\ProfesseurRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProfesseurController extends AbstractController
 {
-    #[Route('/professeur', name: 'app_professeur')]
+    #[Route('/prof', name: 'app_professeur')]
     public function index(ProfesseurRepository $repo, PaginatorInterface $paginator, Request $request): Response
     {
         $professeurs = $paginator->paginate($repo->findAll(),
@@ -25,20 +28,35 @@ class ProfesseurController extends AbstractController
         //     'controller_name' => 'ProfesseurController',
         // ]);
     }
-    // #[Route('/add/professeur', name: 'add_professeur')]
-    // public function add( Request $request,ProfesseurRepository $repo): Response
-    // {
-    //    $prof=new Professeur();
-    //    $form=$this->createForm(ProfesseurType::class,$prof);
-    //    $form->handleRequest($request);
-    //    if ($form->isSubmitted() && $form->isValid()){
-    //        $repo->add($prof,true);
-    //        return $this->redirectToRoute('add_professeur');
-    //    }
-    //        return $this->renderForm('professeur/prof.html.twig',[
-    //            'forms'=>$form,
-    //            'professeur'=>$prof
-    //        ]);
-    // }
+    #[Route('/prof/add', name: 'add_prof')]
+
+    public function addProf(Request $request,EntityManagerInterface $manager): Response
+    {
+        $prof = new Professeur();
+        $form = $this->createForm(ProfFormType::class, $prof);
+
+     
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {   
+            $prof->setRP($this->getUser());
+            // $classe=$form->get('classe')->getData();
+            // $prof->setClasse($classe);
+            $manager->persist($prof);
+          
+            $manager->flush();
+            
+            $this->redirectToRoute('app_professeur');
+
+        }
+        // $form = $this->createForm(EtudiantFormType::class);
+
+        return $this->render("professeur/add.html.twig", [
+            "form_title" => "Ajouter un prof",
+            "form" => $form->createView(),
+            // "classes"=>$classes
+        ]);
+    }
     
 }

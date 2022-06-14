@@ -128,4 +128,5 @@ class Etudiant extends User
 
         return $this;
     }
+    
 }

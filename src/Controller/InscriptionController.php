@@ -25,6 +25,7 @@ class InscriptionController extends AbstractController
 
     public function inscrireEtudiant(Request $request,EntityManagerInterface $manager): Response{
         $ins = new Inscription();
+        // $ins->setAc('getUser')
         $form = $this->createForm(InscriptionFormType::class, $ins);
         $form->handleRequest($request);
 

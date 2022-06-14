@@ -21,6 +21,9 @@ class AnneeScolaire
     #[ORM\Column(type: 'string', length: 50)]
     private $libelle;
 
+    #[ORM\Column(type: 'boolean')]
+    private $etat;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -69,6 +72,18 @@ class AnneeScolaire
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function isEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(bool $etat): self
+    {
+        $this->etat = $etat;
 
         return $this;
     }

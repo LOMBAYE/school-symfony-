@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Classe;
 use App\Entity\Etudiant;
+use App\Entity\Inscription;
 use App\Form\EtudiantFormType;
+use App\Repository\AnneeScolaireRepository;
+use App\Repository\ClasseRepository;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -11,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class EtudiantController extends AbstractController
 {
@@ -40,26 +44,33 @@ class EtudiantController extends AbstractController
   
     #[Route('/add/etudiant', name: 'add_etudiant')]
 
-    public function addEtudiant(Request $request,EntityManagerInterface $manager): Response
+    public function addEtudiant(Request $request,AnneeScolaireRepository $an,EntityManagerInterface $manager,UserPasswordHasherInterface $hasher): Response
     {
         $etudiant = new Etudiant();
         $form = $this->createForm(EtudiantFormType::class, $etudiant);
-        $form->remove('matricule');
         $matricule="MAT-".date("dmYhis");
         $etudiant->setMatricule($matricule);
+        $etudiant->setPassword('password');
+   
+       $an=$an->findOneByEtat(1);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
-        {
-            // $entityManager = $this->getDoctrine()->getManager();
+        {   
+            $hash=$hasher->hashPassword($etudiant,$etudiant->getPassword());
+            $etudiant->setPassword($hash);
             $manager->persist($etudiant);
-            $manager->flush();
-            
+            $ins= new Inscription();
+            $ins->setEtudiant($etudiant);
+            $ins->setAnneeScolaire($an);
+            $classe=$form->get('classe')->getData();
+            $ins->setClasse($classe);
+            $ins->setAc($this->getUser());
+            $manager->persist($ins);
+            $manager->flush();    
             $this->redirectToRoute('app_etudiant');
 
         }
-        // $form = $this->createForm(EtudiantFormType::class);
-
         return $this->render("etudiant/add.html.twig", [
             "form_title" => "Ajouter un etudiant",
             "form_etudiant" => $form->createView(),
