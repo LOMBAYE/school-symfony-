@@ -30,7 +30,6 @@ class RPController extends AbstractController
     public function ajouterRp(Request $request,EntityManagerInterface $manager,UserPasswordHasherInterface $hasher):Response
     {
         $rp= new RP();
-
         $form = $this->createForm(RpFormType::class, $rp);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
@@ -38,9 +37,8 @@ class RPController extends AbstractController
             $hash=$hasher->hashPassword($rp,$rp->getPassword());
             $rp->setPassword($hash);
             $manager->persist($rp);
-            $manager->flush();
-            
-            $this->redirectToRoute('app_r_p');
+            $manager->flush();    
+          return $this->redirectToRoute('app_r_p');
     }
     return $this->render("rp/add.html.twig", [
         "form_title" => "Ajouter un responsable",

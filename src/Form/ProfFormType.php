@@ -21,6 +21,7 @@ class ProfFormType extends AbstractType
             ->add('ajouter_module',EntityType::class,[
                 'class' => Module::class,
                 'choice_label' => 'libelle',
+                'multiple'=>true,
                 'mapped' => false
             ])
             // ->add('classes')

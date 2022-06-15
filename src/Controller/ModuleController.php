@@ -20,8 +20,8 @@ class ModuleController extends AbstractController
         $modules = $paginator->paginate($repo->findAll(),
         $request->query->getInt('page',1),
         10);
-
-       return $this->render('module/index.html.twig', compact('modules'));
+        $title='Liste des modules';
+       return $this->render('module/index.html.twig', compact('title', 'modules'));
         // return $this->render('module/index.html.twig', [
         //     'controller_name' => 'ModuleController',
         // ]);
@@ -39,7 +39,7 @@ class ModuleController extends AbstractController
         {   
             $manager->persist($module);
             $manager->flush();    
-            $this->redirectToRoute('app_module');
+         return  $this->redirectToRoute('app_module');
     }
     return $this->render("module/add.html.twig", [
         "form_title" => "Ajouter une module",

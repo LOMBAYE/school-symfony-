@@ -3,17 +3,27 @@
 {% block title %}Hello ModuleController!{% endblock %}
 
 {% block body %}
-
+<div class="container-fluid mt-5">
+<div class="row d-flex justify-content-around">
+<h1>{{ title }}</h1>
+<a class="nav-link  bg-info text-white offset-6" href="{{path('add_module')}}">Ajouter une module</a>
+</div>
 <table class="table  table-striped  mt-5">
     <tr class="bg-info">
         <th>#</th>
         <th>Libelle du module</th>
+        <th>Actions</th>
     </tr>
     {%set i=0 %}
     {% for module in modules %}
         <tr>
             <td>{% set i=i+1 %}{{i}}</td>
             <td>{{module.libelle}}</td>
+            <td  class="text-center">
+                <a class="btn btn-warning btn-sm">Modifier</a>
+                <a class="btn btn-danger btn-sm">Supprimer</a>
+                <a href="/professeur/<?=$ins->id?>" class="btn btn-outline-primary btn-sm " >Details</a>
+            </td>
         </tr>
     {% endfor %}
 </table>

@@ -3,22 +3,33 @@
 {% block title %}Hello ACController!{% endblock %}
 
 {% block body %}
-
+<div class="container-fluid mt-5">
+<div class="row d-flex justify-content-around">
+<h1>{{ title }}</h1>
+<a class="nav-link  bg-primary text-white offset-6" href="{{path('add_ac')}}">Ajouter un attache</a>
+</div>
 <table class="table  table-striped  mt-5">
     <tr class="bg-primary">
         <th>Nom complet</th>
         <th>Email</th>
         <th>Password</th>
+        <th>Actions</th>
     </tr>
     {% for ac in acs %}
         <tr>
             <td>{{ac.nomComplet}}</td>
             <td>{{ac.login}}</td>
             <td>{{ac.password}}</td>
+            <td  class="text-center">
+                <a class="btn btn-warning btn-sm">Modifier</a>
+                <a class="btn btn-danger btn-sm">Supprimer</a>
+                <a href="/professeur/<?=$ins->id?>" class="btn btn-outline-primary btn-sm " >Details</a>
+            </td>
         </tr>
     {% endfor %}
 </table>
 <div class="navigation d-flex justify-content-center">
     {{ knp_pagination_render(acs) }}
+</div>
 </div>
 {% endblock %}

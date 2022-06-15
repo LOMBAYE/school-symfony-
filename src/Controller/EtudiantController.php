@@ -6,10 +6,11 @@ use App\Entity\Classe;
 use App\Entity\Etudiant;
 use App\Entity\Inscription;
 use App\Form\EtudiantFormType;
-use App\Repository\AnneeScolaireRepository;
 use App\Repository\ClasseRepository;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\InscriptionRepository;
+use App\Repository\AnneeScolaireRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class EtudiantController extends AbstractController
 {
     #[Route('/etudiant', name: 'app_etudiant')]
-    public function index(EtudiantRepository $repo, PaginatorInterface $paginator, Request $request): Response
+    public function index(InscriptionRepository $repo, PaginatorInterface $paginator, Request $request): Response
     { 
         $etudiants = $paginator->paginate($repo->findAll(),
          $request->query->getInt('page',1),
@@ -29,20 +30,12 @@ class EtudiantController extends AbstractController
         // return $this->render('etudiant/index.html.twig', compact('etudiants'));
         return $this->render('etudiant/index.html.twig', [
                     'controller_name' => 'Insertion',
-                    'title' => 'Liste des etudiants',
+                    'title' => 'Liste des inscrits',
                     'etudiants'=>$etudiants,
                 ]);
     }
-    // #[Route('/etudiant', name: 'app_etudiants')]
-    // public function inserer(): Response
-    // {
-    //     return $this->render('etudiant/index.html.twig', [
-    //         'controller_name' => 'Insertion',
-    //     ]);
-    // }
-
   
-    #[Route('/add/etudiant', name: 'add_etudiant')]
+    #[Route('/etudiant/add', name: 'add_etudiant')]
 
     public function addEtudiant(Request $request,AnneeScolaireRepository $an,EntityManagerInterface $manager,UserPasswordHasherInterface $hasher): Response
     {
@@ -68,7 +61,7 @@ class EtudiantController extends AbstractController
             $ins->setAc($this->getUser());
             $manager->persist($ins);
             $manager->flush();    
-            $this->redirectToRoute('app_etudiant');
+          return  $this->redirectToRoute('app_etudiant');
 
         }
         return $this->render("etudiant/add.html.twig", [

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etudiant;
 use App\Entity\Inscription;
 use App\Form\InscriptionFormType;
+use App\Repository\ClasseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,7 @@ class InscriptionController extends AbstractController
 
     #[Route('/inscrire', name: 'inscrire')]
 
-    public function inscrireEtudiant(Request $request,EntityManagerInterface $manager): Response{
+    public function inscrireEtudiant(Request $request,ClasseRepository $classerepo,EntityManagerInterface $manager): Response{
         $ins = new Inscription();
         // $ins->setAc('getUser')
         $form = $this->createForm(InscriptionFormType::class, $ins);

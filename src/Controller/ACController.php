@@ -25,7 +25,8 @@ class ACController extends AbstractController
         // return $this->render('ac/index.html.twig', [
         //     'controller_name' => 'ACController',
         // ]);
-        return $this->render('ac/index.html.twig', compact('acs'));
+        $title='Liste des attaches';
+        return $this->render('ac/index.html.twig', compact('title','acs'));
 
     }
 
@@ -43,7 +44,7 @@ class ACController extends AbstractController
             $manager->persist($ac);
             $manager->flush();
             
-            $this->redirectToRoute('app_a_c');
+       return  $this->redirectToRoute('app_a_c');
     }
     return $this->render("ac/add.html.twig", [
         "form_title" => "Ajouter un attache",

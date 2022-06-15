@@ -22,11 +22,8 @@ class ProfesseurController extends AbstractController
         $professeurs = $paginator->paginate($repo->findAll(),
          $request->query->getInt('page',1),
          10);
-
-        return $this->render('professeur/index.html.twig', compact('professeurs'));
-        // return $this->render('professeur/index.html.twig', [
-        //     'controller_name' => 'ProfesseurController',
-        // ]);
+         $title='Liste des professeurs';
+        return $this->render('professeur/index.html.twig', compact('title','professeurs'));
     }
     #[Route('/prof/add', name: 'add_prof')]
 
@@ -34,23 +31,16 @@ class ProfesseurController extends AbstractController
     {
         $prof = new Professeur();
         $form = $this->createForm(ProfFormType::class, $prof);
-
-     
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid())
         {   
             $prof->setRP($this->getUser());
             // $classe=$form->get('classe')->getData();
             // $prof->setClasse($classe);
             $manager->persist($prof);
-          
-            $manager->flush();
-            
-            $this->redirectToRoute('app_professeur');
-
+            $manager->flush();  
+           return $this->redirectToRoute('app_professeur');
         }
-        // $form = $this->createForm(EtudiantFormType::class);
 
         return $this->render("professeur/add.html.twig", [
             "form_title" => "Ajouter un prof",

@@ -11,6 +11,7 @@
         <th>RP's Name</th>
         <th>Motif</th>
         <th>Date</th>
+        <th>Actions</th>
     </tr>
     {%set i=0 %}
     {% for demande in demandes %}
@@ -20,6 +21,11 @@
             <td>{{demande.rp.nomComplet}}</td>
             <td>{{demande.motif}}</td>
             <td>{{demande.date|date}}</td>
+            <td  class="text-center">
+                <a class="btn btn-warning btn-sm">Modifier</a>
+                <a class="btn btn-danger btn-sm">Supprimer</a>
+                <a href="/professeur/<?=$ins->id?>" class="btn btn-outline-primary btn-sm " >Details</a>
+            </td>
         </tr>
     {% endfor %}
 </table>
